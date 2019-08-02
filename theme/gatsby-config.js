@@ -19,12 +19,12 @@ exports.onPreBootstrap = ({ store, reporter }) => {
 
 module.exports = {
   siteMetadata: {
-    title: "Ghost",
-    description: "The professional publishing platform",
+    title: "FyndX",
+    description: "Fynd best articles for JavaScript developers",
     coverImage: "img/blog-cover.jpg",
     logo: "img/ghost-logo.png",
     lang: "en",
-    siteUrl: "https://gatsby-casper.netlify.com", // full path to blog - no ending slash
+    siteUrl: "https://fyndx.io", // full path to blog - no ending slash
     facebook: "https://www.facebook.com/ghost",
     twitter: "https://twitter.com/tryghost",
     showSubscribe: false, // subscribe button in site nav and home page

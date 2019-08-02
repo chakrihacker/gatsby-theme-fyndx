@@ -8,8 +8,8 @@ module.exports = {
   plugins: ["gatsby-theme-fyndx"],
   // setup your siteMetadata, further described below
   siteMetadata: {
-    title: "Ghost",
-    description: "The professional publishing platform",
+    title: "FyndX",
+    description: "Fynd best articles for JavaScript developers",
     coverImage: "img/blog-cover.jpg",
     logo: "img/ghost-logo.png",
     lang: "en",

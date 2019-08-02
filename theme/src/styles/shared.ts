@@ -77,6 +77,8 @@ export const SiteHeader = css`
   color: #fff;
   /* background: color(var(--darkgrey) l(-5%)) no-repeat center center; */
   background: ${darken("0.05", colors.darkgrey)} no-repeat center center;
+  background-image: linear-gradient(19deg, #15b9df 0%, #29c391 100%);
+  background-size: cover;
   background-size: cover;
 `
 
