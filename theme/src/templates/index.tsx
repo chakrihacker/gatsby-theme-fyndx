@@ -85,7 +85,7 @@ export interface IndexProps {
         fluid: any
       }
     }
-    allMarkdownRemark: {
+    allMdx: {
       edges: Array<{
         node: PageContext
       }>
@@ -173,7 +173,7 @@ const IndexPage: React.FC<IndexProps> = props => {
         <main id="site-main" css={[SiteMain, outer]}>
           <div css={inner}>
             <div css={[PostFeed, PostFeedRaise]}>
-              {props.data.allMarkdownRemark.edges.map(post => {
+              {props.data.allMdx.edges.map(post => {
                 // filter out drafts in production
                 return (
                   (post.node.frontmatter.draft !== true ||
@@ -218,7 +218,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    allMarkdownRemark(
+    allMdx(
       sort: { fields: [frontmatter___date], order: DESC }
       filter: { frontmatter: { draft: { ne: true } } }
       limit: $limit

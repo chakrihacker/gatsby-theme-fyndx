@@ -84,7 +84,7 @@ interface AuthorTemplateProps {
         fluid: any
       }
     }
-    allMarkdownRemark: {
+    allMdx: {
       totalCount: number
       edges: Array<{
         node: PageContext
@@ -126,7 +126,7 @@ const Author: React.FC<AuthorTemplateProps> = props => {
   const author = props.data.authorYaml
   const config = props.data.site.siteMetadata
 
-  const edges = props.data.allMarkdownRemark.edges.filter(edge => {
+  const edges = props.data.allMdx.edges.filter(edge => {
     const isDraft =
       edge.node.frontmatter.draft !== true ||
       process.env.NODE_ENV === "development"
@@ -311,7 +311,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    allMarkdownRemark(
+    allMdx(
       filter: { frontmatter: { draft: { ne: true } } }
       sort: { fields: [frontmatter___date], order: DESC }
       limit: 2000
