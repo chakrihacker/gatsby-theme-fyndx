@@ -6,6 +6,7 @@ import * as React from "react"
 import styled from "@emotion/styled"
 import { css } from "@emotion/core"
 import { Helmet } from "react-helmet"
+import { MDXRenderer } from "gatsby-plugin-mdx"
 
 import AuthorCard from "../components/AuthorCard"
 import Footer from "../components/Footer"
@@ -126,11 +127,10 @@ interface PageTemplateProps {
         fixed: any
       }
     }
-    markdownRemark: {
-      html: string
-      htmlAst: any
+    mdx: {
       excerpt: string
       timeToRead: string
+      body: any
       frontmatter: {
         title: string
         date: string
@@ -188,6 +188,7 @@ interface PageTemplateProps {
 export interface PageContext {
   excerpt: string
   timeToRead: number
+  body: any
   fields: {
     slug: string
   }
@@ -217,7 +218,7 @@ export interface PageContext {
 
 const PageTemplate: React.FC<PageTemplateProps> = props => {
   const config = props.data.site.siteMetadata
-  const post = props.data.markdownRemark
+  const post = props.data.mdx
   let width = ""
   let height = ""
   if (post.frontmatter.image && post.frontmatter.image.childImageSharp) {
@@ -338,7 +339,7 @@ const PageTemplate: React.FC<PageTemplateProps> = props => {
                     />
                   </PostFullImage>
                 )}
-              <PostContent htmlAst={post.htmlAst} />
+              <PostContent body={post.body} />
 
               {/* The big email subscribe modal content */}
               {config.showSubscribe && <Subscribe title={config.title} />}
@@ -388,11 +389,10 @@ export const query = graphql`
         }
       }
     }
-    markdownRemark(fields: { slug: { eq: $slug } }) {
-      html
-      htmlAst
+    mdx(fields: { slug: { eq: $slug } }) {
       excerpt
       timeToRead
+      body
       frontmatter {
         title
         userDate: date(formatString: "D MMMM YYYY")
@@ -420,7 +420,7 @@ export const query = graphql`
         }
       }
     }
-    relatedPosts: allMarkdownRemark(
+    relatedPosts: allMdx(
       filter: {
         frontmatter: { tags: { in: [$primaryTag] }, draft: { ne: true } }
       }

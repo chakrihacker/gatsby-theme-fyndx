@@ -49,7 +49,7 @@ const ErrorLink = css`
 
 interface NotFoundTemplateProps {
   data: {
-    allMarkdownRemark: {
+    allMdx: {
       totalCount: number
       edges: Array<{
         node: PageContext
@@ -59,7 +59,7 @@ interface NotFoundTemplateProps {
 }
 
 const NotFoundPage: React.FC<NotFoundTemplateProps> = props => {
-  const { edges } = props.data.allMarkdownRemark
+  const { edges } = props.data.allMdx
 
   return (
     <IndexLayout>
@@ -100,10 +100,7 @@ export default NotFoundPage
 
 export const pageQuery = graphql`
   query {
-    allMarkdownRemark(
-      limit: 3
-      sort: { fields: [frontmatter___date], order: DESC }
-    ) {
+    allMdx(limit: 3, sort: { fields: [frontmatter___date], order: DESC }) {
       edges {
         node {
           timeToRead
