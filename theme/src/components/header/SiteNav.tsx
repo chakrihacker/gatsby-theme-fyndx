@@ -3,12 +3,20 @@ import { Link, StaticQuery, graphql } from "gatsby"
 import * as React from "react"
 import styled from "@emotion/styled"
 import { css } from "@emotion/core"
+import { FiTerminal, FiSun, FiMoon } from "react-icons/fi"
 
+import ThemeContext from "../ThemeContext"
 import { SocialLink } from "../../styles/shared"
 import Facebook from "../icons/facebook"
 import Twitter from "../icons/twitter"
 import SubscribeModal from "../subscribe/SubscribeOverlay"
 import SiteNavLogo from "./SiteNavLogo"
+import {
+  BACKGROUND_TRANSITION_TIME,
+  EASE_IN_OUT_TRANSITION,
+  getTheme,
+} from "../../utils/theme"
+import Button from "../Button"
 
 const SiteNavStyles = css`
   position: initial;
@@ -103,10 +111,6 @@ const SubscribeButton = styled.a`
   }
 `
 
-interface SiteNavProps {
-  isHome?: boolean
-}
-
 interface SiteNavData {
   site: {
     siteMetadata: {
@@ -118,91 +122,116 @@ interface SiteNavData {
   }
 }
 
-class SiteNav extends React.Component<SiteNavProps> {
-  subscribe = React.createRef<SubscribeModal>()
+const SiteNav: React.FC<{}> = () => {
+  const { theme, toggleTheme } = React.useContext(ThemeContext)
+  const { color, background, secondary } = getTheme(theme)
+  const darkTheme = getTheme("dark")
+  const subscribe = React.createRef<SubscribeModal>()
 
-  openModal = () => {
-    if (this.subscribe.current) {
-      this.subscribe.current.open()
+  const openModal = () => {
+    if (subscribe.current) {
+      subscribe.current.open()
     }
   }
 
-  render() {
-    const { isHome = false } = this.props
-    return (
-      <StaticQuery
-        query={graphql`
-          query {
-            site {
-              siteMetadata {
-                title
-                facebook
-                twitter
-                footer
-              }
+  return (
+    <StaticQuery
+      query={graphql`
+        query {
+          site {
+            siteMetadata {
+              title
+              facebook
+              twitter
+              footer
             }
           }
-        `}
-        // tslint:disable-next-line:react-this-binding-issue
-        render={(props: SiteNavData) => {
-          const config = props.site.siteMetadata
-          return (
-            <nav css={[SiteNavStyles]}>
-              <SiteNavLeft>
-                <SiteNavLogo />
-                <ul css={NavStyles} role="menu">
-                  {/* TODO: mark current nav item - add class nav-current */}
-                  <li role="menuitem">
-                    <Link to="/">Home</Link>
-                  </li>
-                  <li role="menuitem">
-                    <Link to="/about">About</Link>
-                  </li>
-                  <li role="menuitem">
-                    <Link to="/tags/getting-started/">Getting Started</Link>
-                  </li>
-                </ul>
-              </SiteNavLeft>
-              <SiteNavRight>
-                <SocialLinks>
-                  {config.facebook && (
-                    <a
-                      css={SocialLink}
-                      href={config.facebook}
-                      target="_blank"
-                      title="Facebook"
-                      rel="noopener noreferrer"
-                    >
-                      <Facebook />
-                    </a>
-                  )}
-                  {config.twitter && (
-                    <a
-                      css={SocialLink}
-                      href={config.twitter}
-                      title="Twitter"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Twitter />
-                    </a>
-                  )}
-                </SocialLinks>
-                {config.showSubscribe && (
-                  <SubscribeButton onClick={this.openModal}>
-                    Subscribe
-                  </SubscribeButton>
+        }
+      `}
+      // tslint:disable-next-line:react-this-binding-issue
+      render={(props: SiteNavData) => {
+        const config = props.site.siteMetadata
+        return (
+          <nav css={[SiteNavStyles]}>
+            <SiteNavLeft>
+              <SiteNavLogo />
+              <ul css={NavStyles} role="menu">
+                {/* TODO: mark current nav item - add class nav-current */}
+                <li role="menuitem">
+                  <Link to="/">Home</Link>
+                </li>
+                <li role="menuitem">
+                  <Link to="/about">About</Link>
+                </li>
+                <li role="menuitem">
+                  <Link to="/tags/getting-started/">Getting Started</Link>
+                </li>
+              </ul>
+            </SiteNavLeft>
+            <SiteNavRight>
+              <SocialLinks>
+                {config.facebook && (
+                  <a
+                    css={SocialLink}
+                    href={config.facebook}
+                    target="_blank"
+                    title="Facebook"
+                    rel="noopener noreferrer"
+                  >
+                    <Facebook />
+                  </a>
                 )}
-                {config.showSubscribe && (
-                  <SubscribeModal ref={this.subscribe} />
+                {config.twitter && (
+                  <a
+                    css={SocialLink}
+                    href={config.twitter}
+                    title="Twitter"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Twitter />
+                  </a>
                 )}
-              </SiteNavRight>
-            </nav>
-          )
-        }}
-      />
-    )
-  }
+              </SocialLinks>
+              {config.showSubscribe && (
+                <SubscribeButton onClick={openModal}>Subscribe</SubscribeButton>
+              )}
+              {config.showSubscribe && <SubscribeModal ref={subscribe} />}
+              <Button
+                circular
+                onClick={toggleTheme}
+                css={{
+                  background,
+                  transitionDuration: "0s",
+                  // delay background-color transition for nicer animation
+                  transitionDelay:
+                    theme === "dark" ? "0s" : BACKGROUND_TRANSITION_TIME,
+                  transitionProperty: "background-color, color",
+                }}
+              >
+                {theme === "light" ? <FiSun /> : <FiMoon />}
+                <div
+                  className={theme}
+                  css={{
+                    position: "absolute",
+                    background: darkTheme.background,
+                    borderRadius: "50%",
+                    width: 32,
+                    height: 32,
+                    zIndex: -1,
+                    transition: `transform ${BACKGROUND_TRANSITION_TIME} ease`,
+                    "&.dark": {
+                      transform: "scale(150)",
+                    },
+                  }}
+                />
+              </Button>
+            </SiteNavRight>
+          </nav>
+        )
+      }}
+    />
+  )
 }
 
 export default SiteNav
