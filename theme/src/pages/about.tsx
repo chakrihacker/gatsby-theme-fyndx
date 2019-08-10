@@ -29,9 +29,7 @@ const About: React.FC = () => (
     </Helmet>
     <Wrapper css={PageTemplate}>
       <header css={[outer, SiteHeader]}>
-        <div css={inner}>
-          <SiteNav />
-        </div>
+        <SiteNav />
       </header>
       <main id="site-main" className="site-main" css={[SiteMain, outer]}>
         <article className="post page" css={[PostFull, NoImage]}>

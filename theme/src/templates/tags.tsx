@@ -113,8 +113,8 @@ const Tags: React.FC<TagTemplateProps> = props => {
                 : "",
           }}
         >
+          <SiteNav isHome={false} />
           <div css={inner}>
-            <SiteNav isHome={false} />
             <SiteHeaderContent>
               <SiteTitle>{tag}</SiteTitle>
               <SiteDescription>

@@ -6,7 +6,6 @@ import * as React from "react"
 import styled from "@emotion/styled"
 import { css } from "@emotion/core"
 import { Helmet } from "react-helmet"
-import { MDXRenderer } from "gatsby-plugin-mdx"
 
 import AuthorCard from "../components/AuthorCard"
 import Footer from "../components/Footer"
@@ -303,9 +302,7 @@ const PageTemplate: React.FC<PageTemplateProps> = props => {
       </Helmet>
       <Wrapper css={PostTemplate}>
         <header css={[outer, SiteHeader]}>
-          <div css={inner}>
-            <SiteNav />
-          </div>
+          <SiteNav />
         </header>
         <main id="site-main" className="site-main" css={[SiteMain, outer]}>
           <div css={inner}>

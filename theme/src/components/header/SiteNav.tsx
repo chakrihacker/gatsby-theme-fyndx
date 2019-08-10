@@ -10,22 +10,14 @@ import Twitter from "../icons/twitter"
 import SubscribeModal from "../subscribe/SubscribeOverlay"
 import SiteNavLogo from "./SiteNavLogo"
 
-const HomeNavRaise = css`
-  @media (min-width: 900px) {
-    position: relative;
-    top: -70px;
-  }
-`
-
 const SiteNavStyles = css`
-  position: relative;
-  z-index: 300;
+  position: initial;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   overflow-y: hidden;
-  height: 40px;
-  font-size: 1.2rem;
+  height: 50px;
+  font-size: 1.5rem;
 `
 
 const SiteNavLeft = styled.div`
@@ -35,7 +27,7 @@ const SiteNavLeft = styled.div`
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   margin-right: 10px;
-  padding-bottom: 80px;
+  // padding-bottom: 80px;
   letter-spacing: 0.4px;
   white-space: nowrap;
 
@@ -43,7 +35,7 @@ const SiteNavLeft = styled.div`
 
   @media (max-width: 700px) {
     margin-right: 0;
-    padding-left: 4vw;
+    // padding-left: 4vw;
   }
 `
 
@@ -155,9 +147,9 @@ class SiteNav extends React.Component<SiteNavProps> {
         render={(props: SiteNavData) => {
           const config = props.site.siteMetadata
           return (
-            <nav css={[isHome && HomeNavRaise, SiteNavStyles]}>
+            <nav css={[SiteNavStyles]}>
               <SiteNavLeft>
-                {!isHome && <SiteNavLogo />}
+                <SiteNavLogo />
                 <ul css={NavStyles} role="menu">
                   {/* TODO: mark current nav item - add class nav-current */}
                   <li role="menuitem">

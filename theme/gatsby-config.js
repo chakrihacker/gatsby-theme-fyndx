@@ -25,8 +25,8 @@ module.exports = {
     logo: "img/ghost-logo.png",
     lang: "en",
     siteUrl: "https://fyndx.io", // full path to blog - no ending slash
-    facebook: "https://www.facebook.com/ghost",
-    twitter: "https://twitter.com/tryghost",
+    facebook: "https://www.facebook.com/chakrihacker",
+    twitter: "https://twitter.com/chakrihacker",
     showSubscribe: false, // subscribe button in site nav and home page
     mailchimpAction: "", // 'https://twitter.us19.list-manage.com/subscribe/post?u=a89b6987ac248c81b0b7f3a0f&amp;id=7d777b7d75',
     mailchimpName: "", // 'b_a89b6987ac248c81b0b7f3a0f_7d777b7d75',

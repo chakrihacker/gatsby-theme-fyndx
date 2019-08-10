@@ -191,8 +191,8 @@ const Author: React.FC<AuthorTemplateProps> = props => {
               : "",
           }}
         >
+          <SiteNav isHome={false} />
           <div css={inner}>
-            <SiteNav isHome={false} />
             <SiteHeaderContent>
               <img
                 css={[AuthorProfileImage, AuthorProfileBioImage]}
