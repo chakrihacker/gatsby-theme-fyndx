@@ -1,5 +1,4 @@
 import { Link } from "gatsby"
-import Img from "gatsby-image"
 import * as _ from "lodash"
 import { lighten } from "polished"
 import * as React from "react"
@@ -10,7 +9,7 @@ import { colors } from "../styles/colors"
 import { PageContext } from "../templates/post"
 
 const PostCardStyles = css`
-  flex: 1 1 300px;
+  flex: 0 1 300px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -29,20 +28,6 @@ const PostCardStyles = css`
     transition: all 0.4s ease;
     transform: translate3D(0, -1px, 0) scale(1.02);
   }
-`
-
-const PostCardImageLink = css`
-  position: relative;
-  display: block;
-  overflow: hidden;
-  border-radius: 5px 5px 0 0;
-`
-
-const PostCardImage = styled.div`
-  width: auto;
-  height: 200px;
-  background: ${colors.lightgrey} no-repeat center center;
-  background-size: cover;
 `
 
 const PostCardContent = styled.div`
@@ -201,29 +186,7 @@ export interface PostCardProps {
 
 const PostCard: React.FC<PostCardProps> = ({ post }) => {
   return (
-    <article
-      className={`post-card ${post.frontmatter.image ? "" : "no-image"}`}
-      css={PostCardStyles}
-    >
-      {post.frontmatter.image && (
-        <Link
-          className="post-card-image-link"
-          css={PostCardImageLink}
-          to={post.fields.slug}
-        >
-          <PostCardImage className="post-card-image">
-            {post.frontmatter.image &&
-              post.frontmatter.image.childImageSharp &&
-              post.frontmatter.image.childImageSharp.fluid && (
-                <Img
-                  alt={`${post.frontmatter.title} cover image`}
-                  style={{ height: "100%" }}
-                  fluid={post.frontmatter.image.childImageSharp.fluid}
-                />
-              )}
-          </PostCardImage>
-        </Link>
-      )}
+    <article className={`post-card`} css={PostCardStyles}>
       <PostCardContent className="post-card-content">
         <Link
           className="post-card-content-link"

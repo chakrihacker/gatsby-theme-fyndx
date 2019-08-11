@@ -1,6 +1,5 @@
 import { graphql } from "gatsby"
 import * as React from "react"
-import { css } from "@emotion/core"
 import Helmet from "react-helmet"
 
 import Footer from "../components/Footer"
@@ -8,61 +7,19 @@ import SiteNav from "../components/header/SiteNav"
 import PostCard from "../components/PostCard"
 import Wrapper from "../components/Wrapper"
 import IndexLayout from "../layouts"
-import Pagination from "../components/Pagination"
-
 import {
   inner,
   outer,
   PostFeed,
-  PostFeedRaise,
   SiteDescription,
   SiteHeader,
   SiteHeaderContent,
   SiteMain,
   SiteTitle,
 } from "../styles/shared"
-import { PageContext } from "./post"
-
-const HomePosts = css`
-  @media (min-width: 795px) {
-    .post-card:nth-of-type(6n + 1):not(.no-image) {
-      flex: 1 1 100%;
-      flex-direction: row;
-    }
-    .post-card:nth-of-type(6n + 1):not(.no-image) .post-card-image-link {
-      position: relative;
-      flex: 1 1 auto;
-      border-radius: 5px 0 0 5px;
-    }
-    .post-card:nth-of-type(6n + 1):not(.no-image) .post-card-image {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-    }
-    .post-card:nth-of-type(6n + 1):not(.no-image) .post-card-content {
-      flex: 0 1 357px;
-    }
-    .post-card:nth-of-type(6n + 1):not(.no-image) h2 {
-      font-size: 2.6rem;
-    }
-    .post-card:nth-of-type(6n + 1):not(.no-image) p {
-      font-size: 1.8rem;
-      line-height: 1.55em;
-    }
-    .post-card:nth-of-type(6n + 1):not(.no-image) .post-card-content-link {
-      padding: 30px 40px 0;
-    }
-    .post-card:nth-of-type(6n + 1):not(.no-image) .post-card-meta {
-      padding: 0 40px 30px;
-    }
-  }
-`
+import { PageContext } from "../templates/post"
 
 export interface IndexProps {
-  pageContext: {
-    currentPage: number
-    numPages: number
-  }
   data: {
     site: {
       siteMetadata: {
@@ -86,14 +43,14 @@ export interface IndexProps {
       }
     }
     allMdx: {
-      edges: Array<{
+      edges: {
         node: PageContext
-      }>
+      }[]
     }
   }
 }
 
-const IndexPage: React.FC<IndexProps> = props => {
+const IndexPage: React.FunctionComponent<IndexProps> = props => {
   const width = props.data.header.childImageSharp.fluid.sizes
     .split(", ")[1]
     .split("px")[0]
@@ -103,7 +60,7 @@ const IndexPage: React.FC<IndexProps> = props => {
   const config = props.data.site.siteMetadata
 
   return (
-    <IndexLayout css={HomePosts}>
+    <IndexLayout>
       <Helmet>
         <html lang={config.lang} />
         <title>{config.title}</title>
@@ -119,12 +76,6 @@ const IndexPage: React.FC<IndexProps> = props => {
         />
         {config.facebook && (
           <meta property="article:publisher" content={config.facebook} />
-        )}
-        {config.googleSiteVerification && (
-          <meta
-            name="google-site-verification"
-            content={config.googleSiteVerification}
-          />
         )}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={config.title} />
@@ -144,15 +95,8 @@ const IndexPage: React.FC<IndexProps> = props => {
         <meta property="og:image:height" content={height} />
       </Helmet>
       <Wrapper>
-        <header
-          css={[outer, SiteHeader]}
-          style={
-            {
-              // backgroundImage: `url('${props.data.header.childImageSharp.fluid.src}')`,
-            }
-          }
-        >
-          <SiteNav isHome />
+        <header css={[outer, SiteHeader]}>
+          <SiteNav isHome={true} />
           <div css={inner}>
             <SiteHeaderContent>
               <SiteTitle>
@@ -172,7 +116,7 @@ const IndexPage: React.FC<IndexProps> = props => {
         </header>
         <main id="site-main" css={[SiteMain, outer]}>
           <div css={inner}>
-            <div css={[PostFeed, PostFeedRaise]}>
+            <div css={[PostFeed]}>
               {props.data.allMdx.edges.map(post => {
                 // filter out drafts in production
                 return (
@@ -186,10 +130,7 @@ const IndexPage: React.FC<IndexProps> = props => {
           </div>
         </main>
         {props.children}
-        <Pagination
-          currentPage={props.pageContext.currentPage}
-          numPages={props.pageContext.numPages}
-        />
+
         <Footer />
       </Wrapper>
     </IndexLayout>
@@ -199,7 +140,7 @@ const IndexPage: React.FC<IndexProps> = props => {
 export default IndexPage
 
 export const pageQuery = graphql`
-  query blogPageQuery($skip: Int!, $limit: Int!) {
+  query {
     logo: file(relativePath: { eq: "img/fyndx-logo.png" }) {
       childImageSharp {
         # Specify the image processing specifications right in the query.
@@ -221,8 +162,7 @@ export const pageQuery = graphql`
     allMdx(
       sort: { fields: [frontmatter___date], order: DESC }
       filter: { frontmatter: { draft: { ne: true } } }
-      limit: $limit
-      skip: $skip
+      limit: 1000
     ) {
       edges {
         node {

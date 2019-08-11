@@ -11,9 +11,10 @@ import { outer, inner } from "../styles/shared"
 const SiteFooter = css`
   position: relative;
   padding-top: 20px;
-  padding-bottom: 60px;
+  padding-bottom: 20px;
   color: #fff;
   background: ${setLightness("0.0015", colors.darkgrey)};
+  background-image: linear-gradient(to right, #434343 0%, black 100%);
 `
 
 const SiteFooterContent = css`
@@ -22,7 +23,7 @@ const SiteFooterContent = css`
   justify-content: space-between;
   align-items: center;
   color: rgba(255, 255, 255, 0.7);
-  font-size: 1.3rem;
+  font-size: 1.8rem;
   a {
     color: rgba(255, 255, 255, 0.7);
   }
@@ -93,11 +94,7 @@ const Footer: React.FC = () => {
       <div css={[inner, SiteFooterContent]}>
         <section className="copyright">
           <Link to="/">{config.title}</Link> &copy; {new Date().getFullYear()}{" "}
-          {config.footer && (
-            <Link to="/">
-              | {config.title} {config.footer}
-            </Link>
-          )}
+          {config.footer && <Link to="/">| {config.title}</Link>}
         </section>
         <SiteFooterNav>
           <Link to="/">Latest Posts</Link>
@@ -111,12 +108,6 @@ const Footer: React.FC = () => {
               Twitter
             </a>
           )}
-
-          <a href="https://ghost.org" target="_blank" rel="noopener noreferrer">
-            Ghost
-          </a>
-
-          <a href="/rss.xml">RSS</a>
         </SiteFooterNav>
       </div>
     </footer>

@@ -327,15 +327,6 @@ const PageTemplate: React.FC<PageTemplateProps> = props => {
                 <PostFullTitle>{post.frontmatter.title}</PostFullTitle>
               </PostFullHeader>
 
-              {post.frontmatter.image &&
-                post.frontmatter.image.childImageSharp && (
-                  <PostFullImage>
-                    <Img
-                      style={{ height: "100%" }}
-                      fluid={post.frontmatter.image.childImageSharp.fluid}
-                    />
-                  </PostFullImage>
-                )}
               <PostContent body={post.body} />
 
               {/* The big email subscribe modal content */}

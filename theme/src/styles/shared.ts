@@ -38,19 +38,17 @@ export const SiteDescription = styled.h2`
   opacity: 0.8;
 `
 
+export const Flex = css`
+  display: flex;
+`
+
 export const PostFeed = css`
   position: relative;
   display: flex;
   flex-wrap: wrap;
   margin: 0 -20px;
   padding: 40px 0 0 0;
-`
-
-export const PostFeedRaise = css`
-  @media (min-width: 900px) {
-    margin-top: -70px;
-    padding-top: 0;
-  }
+  justify-content: center;
 `
 
 export const SocialLink = css`
@@ -77,8 +75,7 @@ export const SiteHeader = css`
   color: #fff;
   /* background: color(var(--darkgrey) l(-5%)) no-repeat center center; */
   background: ${darken("0.05", colors.darkgrey)} no-repeat center center;
-  // background-image: linear-gradient(19deg, #15b9df 0%, #29c391 100%);
-  background-image: linear-gradient(to top, #48c6ef 0%, #6f86d6 100%);
+  background-image: linear-gradient(to right, #434343 0%, black 100%);
   background-size: cover;
   background-size: cover;
 `

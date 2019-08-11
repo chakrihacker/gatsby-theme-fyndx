@@ -10,7 +10,7 @@ import { colors } from "../styles/colors"
 export const PostFullContent = styled.section`
   position: relative;
   margin: 0 auto;
-  padding: 70px 100px 0;
+  padding: 0 100px 0;
   min-height: 230px;
   font-family: Georgia, serif;
   font-size: 2.2rem;
@@ -22,34 +22,6 @@ export const PostFullContent = styled.section`
   }
   @media (max-width: 800px) {
     font-size: 1.9rem;
-  }
-
-  :before {
-    content: "";
-    position: absolute;
-    top: 15px;
-    left: -5px;
-    z-index: -1;
-    display: block;
-    width: 20px;
-    height: 200px;
-    background: rgba(39, 44, 49, 0.15);
-    filter: blur(5px);
-    transform: rotate(-5deg);
-  }
-
-  :after {
-    content: "";
-    position: absolute;
-    top: 15px;
-    right: -5px;
-    z-index: -1;
-    display: block;
-    width: 20px;
-    height: 200px;
-    background: rgba(39, 44, 49, 0.15);
-    filter: blur(5px);
-    transform: rotate(5deg);
   }
 
   h1,
